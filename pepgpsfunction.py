@@ -1,5 +1,9 @@
 ### FOR REFERENCE ONLY ###
 import socket
+import datetime
+from time import sleep
+
+sleep(300)
 
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client_socket.connect(("192.168.50.1", 60660)) #IP and socket for Pepwave GPS data
@@ -23,6 +27,13 @@ def gps_location():
                     print("GPS Time: " + gps_time[0:6])
                     print("Lat: " + lat_data[0:2] + " " + lat_data[2:8] + " " + lat_data[-1])
                     print("Long: " + long_data[0:3] + " " + long_data[3:9] + " " + long_data[-1])
+                    dateraw = datetime.datetime.now()
+                    date_format = dateraw.strftime('%Y%m%d')
+                    time_format = dateraw.strftime('%H%M%S')
+                    save_path = '/home/fofs/Desktop/camera_captures/' + date_format + 'gpsdata.txt'
+                    f = open(save_path, 'a')
+                    f.write("Long: " + long_data[0:3] + " " + long_data[3:9] + " " + long_data[-1])
+                    f.close
                 else: print("GPS invalid")
 
 while True:
